@@ -1,0 +1,24 @@
+.content-height{
+    height: 88vh;
+}
+
+.card-width {
+    width: 50%;
+}
+.mat-card-header-text {
+    margin: 0px !important;
+}
+.content-margin {
+    margin: 50px;
+}
+.card-size {
+    height: 100%;
+    width: 90%;
+    padding: 16px !important;
+}
+.display {
+    justify-content: flex-end;
+}
+.button-margin {
+    margin-right: 10px;
+}

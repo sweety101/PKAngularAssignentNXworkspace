@@ -1,0 +1,80 @@
+<!-- <div class= "content-height">
+    <div fxLayout = "row" fxLayout.xs = "column" fxLayoutWrap fxFlexAlign="stretch" fxLayoutAlign = "center" class="content-margin">
+      <div class="content">
+        <div *ngFor = "let book of booksCollectionDetails " fxFlex="100%" fxLayout="row wrap" fxLayoutGap="16px grid" fxFlex.xs="100%" fxFlex.sm="100%" >
+            <mat-card class="card-size">
+                <mat-card-header >
+                    <mat-card-title>{{book.volumeInfo.title}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class = "display" fxLayout="row">
+                        <div *ngIf = "book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.smallThumbnail"><img src = {{book.volumeInfo.imageLinks.smallThumbnail}} width = "130px" height="170px"></div>
+                    </div>
+                    <p>{{book.volumeInfo.description}}</p>
+                    <strong>Written By:</strong>
+                    <ng-container *ngIf = "book.volumeInfo.authors && book.volumeInfo.authors.length > 1; else default">
+                      <div>
+                        {{book.volumeInfo.authors.join(', ')}}
+                      </div>
+                    </ng-container>
+                    <ng-template #default>
+                      <p>{{book.volumeInfo.authors}}</p>
+                    </ng-template>
+                    <strong>Billing Addbooks:</strong>
+                    <br>
+                    <p><strong>Name:</strong> {{book.name}}</p>
+                    <p><strong>Email:</strong> {{book.email}}</p>
+                    <p><strong>Phone:</strong> {{book.phoneNumber}}</p>
+                    <p><strong>Addbooks:</strong> {{book.addbooks}}</p>
+                </mat-card-content>
+            </mat-card>
+        </div>
+      </div>
+    </div>
+</div> -->
+
+
+<div class= "content-height">
+    <div fxLayout = "row" fxLayout.xs = "column" fxLayoutWrap fxFlexAlign="stretch" fxLayoutAlign = "center" class="content-margin">
+      <div class="content">
+        <div fxFlex="100%" fxLayout="row wrap" fxLayoutGap="16px grid"  >
+          <div fxFlex="50%" fxFlex.xs="100%" fxFlex.sm="100%" *ngFor = "let book of booksCollectionDetails">
+            <mat-card class="card-size card-padding">
+              <mat-card-header>
+                <mat-card-title>{{book.volumeInfo.title}}</mat-card-title>
+                <mat-card-subtitle>
+                  <p>{{ (book.volumeInfo.subtitle && book.volumeInfo.subtitle.length > 30)? (book.volumeInfo.subtitle | slice:0:30)+'..':(book.volumeInfo.subtitle) }}</p>
+                  <p *ngIf =  "!book.volumeInfo.subtitle"><br></p>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <div class = "display" fxLayout="row">
+                <div *ngIf = "book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.smallThumbnail"><img src = {{book.volumeInfo.imageLinks.smallThumbnail}} width = "130px" height="170px"></div>
+              </div>
+                <p *ngIf = "book.volumeInfo.description">
+                  {{ (book.volumeInfo.description.length > 300)? (book.volumeInfo.description | slice:0:300)+'..':(book.volumeInfo.description) }}
+                </p>
+                <h3>Written By:</h3>
+                <ng-container *ngIf = "book.volumeInfo.authors && book.volumeInfo.authors.length > 1; else default">
+                  <div>
+                    {{book.volumeInfo.authors.join(', ')}}
+                  </div>
+                </ng-container>
+                <ng-template #default>
+                  <p>{{book.volumeInfo.authors}}</p>
+                </ng-template>
+                <br>
+                <strong>Billing Address:</strong>
+                <br>
+                <br>
+                <p><strong>Name:</strong> {{book.name}}</p>
+                <p><strong>Email:</strong> {{book.email}}</p>
+                <p><strong>Phone:</strong> {{book.phoneNumber}}</p>
+                <p><strong>Address:</strong> {{book.address}}</p>
+            </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

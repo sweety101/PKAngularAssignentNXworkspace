@@ -1,0 +1,46 @@
+
+<div  class= "content-height">
+    <div fxLayout = "row" fxLayout.xs = "column" fxLayoutWrap fxFlexAlign="stretch" fxLayoutAlign = "center" class="content-margin">
+      <div class="content">
+        <div fxFlex="100%" fxLayout="row wrap" fxLayoutGap="16px grid" fxFlex.xs="100%" fxFlex.sm="100%" >
+            <mat-card class="card-size">
+                <form [formGroup] = "billingForm" autocomplete="off" novalidate >
+                    <mat-card-content>
+                        <div class= "coverDiv" fxLayout = "row" fxLayout.xs = "column" fxLayout.sm = "column" fxLayoutWrap fxFlexAlign="stretch" fxLayoutAlign = "center" >
+                            <div  class= "outerDiv" style = "width: 75vw;align-items: center; margin: 0px !important;" fxFlex="100%" fxLayout="row" fxLayout.sm = "column" fxLayout.xs = "column" fxLayoutGap="16px grid">
+                                <div class= "medium-width card-width" style = "text-align: center;">
+                                    <i fxFlex class="fa fa-credit-card fontSize"></i>
+                                </div>
+                                <div class= "medium-width card-width form-padding" fxFlex fxLayout="column" fxLayout.sm = "column" fxLayout.xs = "column" style="background-color: rgba(0,0,0,.04); padding: 
+                                10px !important;" >
+                                    <h3 fxFlexAlign="center"><strong>Billing Info</strong></h3>
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Your name</mat-label>
+                                        <input matInput formControlName="name" id="name">
+                                    </mat-form-field>
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Your email</mat-label>
+                                        <input matInput formControlName="email" id="email">
+                                    </mat-form-field>
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Your phone number</mat-label>
+                                        <input matInput formControlName="phoneNumber" id="phoneNumber">
+                                    </mat-form-field>
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Your address</mat-label>
+                                        <textarea matInput formControlName="address" id="address"></textarea>
+                                        <mat-hint align="end">Please enter your correct address</mat-hint>
+                                    </mat-form-field>
+                                    <br>
+                                    <!-- <button mat-flat-button disabled style="width: 25%" fxFlexAlign="end">Submit</button> -->
+                                    <button mat-flat-button style="width: 25%" [disabled]="!billingForm.valid" fxFlexAlign="end" color = "warn" (click) = "openDialog(billingForm.value)">Submit</button>
+                                </div>
+                            </div>                    
+                        </div>
+                    </mat-card-content> 
+                </form>
+            </mat-card>
+        </div>
+      </div>
+    </div>
+</div>

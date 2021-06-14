@@ -1,0 +1,29 @@
+.iconPadding {
+    padding: 12px;
+}
+.card-width {
+    width: 50%;
+}
+/* .card-padding {
+    padding: 16px !important ;
+} */
+.content-margin {
+    margin: 50px;
+}
+.card-size {
+    padding: 16px !important;
+    height: 95%;
+    width: 90%;
+}
+.display {
+    justify-content: flex-end;
+}
+.content-height{
+    height: 88vh;
+}
+.button-margin {
+    margin-right: 10px;
+}
+@media only screen and (max-width: 389px) {
+
+}

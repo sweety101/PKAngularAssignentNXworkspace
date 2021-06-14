@@ -1,0 +1,21 @@
+<mat-toolbar color="warn">
+  <mat-toolbar-row>
+    <button mat-icon-button>
+      <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+    </button>
+    <h1>Enlight</h1>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container fxFlexFill>
+  <mat-sidenav #sidenav fxLayout="column">
+    <mat-nav-list fxLayout="column">
+      <a mat-list-item [routerLink]="['search']" (click)="sidenav.toggle()"> <mat-icon class="iconPadding">search</mat-icon> Search </a>
+      <a mat-list-item [routerLink]="['/cart']" (click)="sidenav.toggle()"> <mat-icon matBadge= {{cartCount}} matBadgePosition="before" matBadgeColor="warn" class="iconPadding">shopping_cart</mat-icon> Cart </a>
+      <a mat-list-item [routerLink]="['myCollections']" (click)="sidenav.toggle()"> <mat-icon  matBadge= {{collectionCount}} matBadgePosition="before" matBadgeColor="warn" class="iconPadding">collections</mat-icon> My Collection </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content fxFlexFill>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

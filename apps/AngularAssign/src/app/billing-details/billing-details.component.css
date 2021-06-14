@@ -1,0 +1,57 @@
+.content-height{
+    height: 88vh;
+}
+
+.card-width {
+    width: 50%;
+}
+.mat-card-header-text {
+    margin: 0px !important;
+}
+.content-margin {
+    margin: 50px;
+}
+.card-size {
+    height: 100%;
+    width: 100%;
+    padding: 16px !important;
+}
+.outerDiv{
+    margin: 0px !important;
+}
+.display {
+    justify-content: flex-end;
+}
+.button-margin {
+    margin-right: 10px;
+}
+.fontSize {
+    font-size: 220px;
+}
+.form-padding{
+    padding: 16px !important;
+}
+@media only screen and (max-width: 960px) {
+    .medium-width {
+      width: 100%;
+    }
+}
+@media only screen and (max-width: 450px) {
+    .fontSize {
+      font-size: 150px;
+    }
+    .content-margin {
+        margin: 0px;
+    }
+    .outerDiv{
+        margin: 35px !important;
+    }
+}
+@media only screen and (max-width: 281px) {
+    .outerDiv{
+        margin: 0px !important;
+    }
+    .coverDiv{
+        margin: 15px;
+    }
+}
