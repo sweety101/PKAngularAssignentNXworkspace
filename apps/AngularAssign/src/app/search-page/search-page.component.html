@@ -60,40 +60,30 @@
             </mat-card-header>
             <mat-card-content>
               <div class="display" fxLayout="row">
-                <div
-                  *ngIf="
-                    res.volumeInfo.imageLinks &&
-                    res.volumeInfo.imageLinks.smallThumbnail
-                  "
-                >
+                <div>
                   <img
-                    src="{{ res.volumeInfo.imageLinks.smallThumbnail }}"
+                    src="{{ res.volumeInfo?.imageLinks?.smallThumbnail }}"
                     width="130px"
                     height="170px"
                   />
                 </div>
               </div>
-              <p *ngIf="res.volumeInfo.description">
+              <p>
                 {{
+                  res.volumeInfo?.description &&
                   res.volumeInfo.description.length > 300
                     ? (res.volumeInfo.description | slice: 0:300) + '..'
                     : res.volumeInfo.description
                 }}
               </p>
               <h3>Written By:</h3>
-              <ng-container
-                *ngIf="
-                  res.volumeInfo.authors && res.volumeInfo.authors.length > 1;
-                  else default
-                "
-              >
-                <div>
-                  {{ res.volumeInfo.authors | Joining }}
-                </div>
-              </ng-container>
-              <ng-template #default>
-                <p>{{ res.volumeInfo.authors }}</p>
-              </ng-template>
+              <div>
+                {{
+                  res.volumeInfo?.authors && res.volumeInfo.authors.length > 1
+                    ? (res.volumeInfo.authors | Joining)
+                    : res.volumeInfo.authors
+                }}
+              </div>
             </mat-card-content>
           </mat-card>
         </div>

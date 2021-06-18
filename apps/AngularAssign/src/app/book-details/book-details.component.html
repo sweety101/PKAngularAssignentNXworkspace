@@ -42,20 +42,14 @@
             </p>
             <p>{{ bookDetails.volumeInfo.description }}</p>
             <strong>Written By:</strong>
-            <ng-container
-              *ngIf="
-                bookDetails.volumeInfo.authors &&
-                  bookDetails.volumeInfo.authors.length > 1;
-                else default
-              "
-            >
-              <div>
-                {{ bookDetails.volumeInfo.authors | Joining }}
-              </div>
-            </ng-container>
-            <ng-template #default>
-              <p>{{ bookDetails.volumeInfo.authors }}</p>
-            </ng-template>
+            <div>
+              {{
+                bookDetails.volumeInfo?.authors &&
+                bookDetails.volumeInfo.authors.length > 1
+                  ? (bookDetails.volumeInfo.authors | Joining)
+                  : bookDetails.volumeInfo.authors
+              }}
+            </div>
             <br />
             <button
               class="button-margin"
