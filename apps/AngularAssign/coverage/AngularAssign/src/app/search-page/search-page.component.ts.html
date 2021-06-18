@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">12.5% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/16</span>
+                <span class='fraction'>14/14</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">7.14% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/14</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -94,9 +94,7 @@
 <a name='L35'></a><a href='#L35'>35</a>
 <a name='L36'></a><a href='#L36'>36</a>
 <a name='L37'></a><a href='#L37'>37</a>
-<a name='L38'></a><a href='#L38'>38</a>
-<a name='L39'></a><a href='#L39'>39</a>
-<a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L38'></a><a href='#L38'>38</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -108,70 +106,66 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ApiserviceService } from '../apiservice.service';
-import { Router} from '@angular/router'; 
+import { Router } from '@angular/router';
 import { Book } from '../Book';
 import { Subscription } from 'rxjs';
 &nbsp;
 @Component({
   selector: 'app-search-page',
   templateUrl: './search-page.component.html',
-  styleUrls: ['./search-page.component.css']
+  styleUrls: ['./search-page.component.css'],
 })
 export class SearchPageComponent implements OnInit, OnDestroy {
-<span class="cstat-no" title="statement not covered" >  books : boolean = false;</span>
-  results : any;
-  subscription: Subscription
-<span class="fstat-no" title="function not covered" >  constructor(private <span class="cstat-no" title="statement not covered" >a</span>piService: ApiserviceService,</span> private <span class="cstat-no" title="statement not covered" >router: Router)</span> { }
-<span class="fstat-no" title="function not covered" >  ngOnInit(</span>): void {
-<span class="cstat-no" title="statement not covered" >    this.getData('React');</span>
+  books = false;
+  results: Book[];
+  subscription: Subscription;
+  constructor(private apiService: ApiserviceService, private router: Router) {}
+  ngOnInit(): void {
+    this.getData('React');
   }
-<span class="fstat-no" title="function not covered" >  getData(</span>value : string){
-<span class="cstat-no" title="statement not covered" >    console.log(value);</span>
-    let searchAPI = <span class="cstat-no" title="statement not covered" >this.apiService.search(value);</span>
-<span class="cstat-no" title="statement not covered" >    this.subscription = searchAPI.subscribe(<span class="fstat-no" title="function not covered" >data </span>=&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      this.books = true;</span>
-<span class="cstat-no" title="statement not covered" >      this.apiService.booksList = data;</span>
-<span class="cstat-no" title="statement not covered" >      this.results = data;</span>
-<span class="cstat-no" title="statement not covered" >      console.log(data);</span>
+  getData(value: string): void {
+    this.apiService.searchString = value;
+    this.subscription = this.apiService.search().subscribe((data) =&gt; {
+      this.books = true;
+      this.apiService.booksList = data;
+      this.results = data;
     });
   }
-<span class="fstat-no" title="function not covered" >  trackByTitle(</span>index: number, currentItem: any): string {
-<span class="cstat-no" title="statement not covered" >    return currentItem.title;</span>
+  trackByTitle(index: number, currentItem: Book): string {
+    return currentItem.volumeInfo.title;
   }
-<span class="fstat-no" title="function not covered" >  navigateToBookDetails(</span>id : string) {
-<span class="cstat-no" title="statement not covered" >    this.router.navigate(['/bookDetails', id]);</span>
+  navigateToBookDetails(id: string): void {
+    this.router.navigate(['/bookDetails', id]);
   }
-<span class="fstat-no" title="function not covered" >  ngOnDestroy </span>() {
-<span class="cstat-no" title="statement not covered" >    this.subscription.unsubscribe();</span>
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -181,7 +175,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Mon Jun 14 2021 10:05:53 GMT+0530 (India Standard Time)
+                at Fri Jun 18 2021 16:49:29 GMT+0530 (India Standard Time)
             </div>
         </div>
         <script src="../../../prettify.js"></script>

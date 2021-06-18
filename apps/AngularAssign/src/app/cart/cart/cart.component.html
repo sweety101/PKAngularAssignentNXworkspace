@@ -1,0 +1,100 @@
+<div class="content-height">
+  <div
+    *ngIf="books"
+    fxLayout="row"
+    fxLayout.xs="column"
+    fxLayoutWrap
+    fxFlexAlign="stretch"
+    fxLayoutAlign="center"
+    class="content-margin"
+  >
+    <div class="content">
+      <div fxFlex="100%" fxLayout="row wrap" fxLayoutGap="16px grid">
+        <div
+          fxFlex="50%"
+          fxFlex.xs="100%"
+          fxFlex.sm="100%"
+          *ngFor="let res of books; trackBy: trackByTitle"
+        >
+          <mat-card class="card-size card-padding">
+            <mat-card-header fxLayout="row">
+              <div class="mat-card-header-text" fxFlex="100%">
+                <mat-card-title
+                  class="title-width"
+                  fxFlex="100%"
+                  fxFlex.sm="50%"
+                  fxFlex.xs="100%"
+                  >{{ res.volumeInfo.title }} -
+                  <span class="subtitle-color">
+                    {{
+                      res.volumeInfo?.subtitle &&
+                      res.volumeInfo.subtitle.length > 90
+                        ? (res.volumeInfo.subtitle | slice: 0:90) + '..'
+                        : res.volumeInfo.subtitle
+                    }}
+                  </span></mat-card-title
+                >
+              </div>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="display" fxLayout="row">
+                <div
+                  *ngIf="
+                    res.volumeInfo.imageLinks &&
+                    res.volumeInfo.imageLinks.smallThumbnail
+                  "
+                >
+                  <img
+                    src="{{ res.volumeInfo.imageLinks.smallThumbnail }}"
+                    width="130px"
+                    height="170px"
+                  />
+                </div>
+              </div>
+              <p *ngIf="res.volumeInfo.description">
+                {{
+                  res.volumeInfo.description.length > 300
+                    ? (res.volumeInfo.description | slice: 0:300) + '..'
+                    : res.volumeInfo.description
+                }}
+              </p>
+              <h3>Written By:</h3>
+              <ng-container
+                *ngIf="
+                  res.volumeInfo.authors && res.volumeInfo.authors.length > 1;
+                  else default
+                "
+              >
+                <div>
+                  {{ res.volumeInfo.authors | Joining }}
+                </div>
+              </ng-container>
+              <ng-template #default>
+                <p>{{ res.volumeInfo.authors }}</p>
+              </ng-template>
+              <br />
+              <button
+                class="button-margin"
+                mat-flat-button
+                color="warn"
+                (click)="navigateToBillingDetails(res.id)"
+              >
+                PROCEED TO BUY
+              </button>
+              <button
+                class="button-margin"
+                mat-flat-button
+                color="warn"
+                (click)="deleteFromCart(res.id)"
+              >
+                DELETE
+              </button>
+              <br />
+              <br />
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

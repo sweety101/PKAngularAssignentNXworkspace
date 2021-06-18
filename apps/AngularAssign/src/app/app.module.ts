@@ -13,7 +13,9 @@ import { BillingDetailsComponent } from './billing-details/billing-details.compo
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogBodyComponent } from './dialog-body/dialog-body.component';
 import { MaterialModule } from './material.module';
-import { CartandcollectionModule } from './cartandcollection/cartandcollection.module';
+import { CartModule } from './cart/cart.module';
+import { CollectionModule } from './collection/collection.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,7 @@ import { CartandcollectionModule } from './cartandcollection/cartandcollection.m
     SearchPageComponent,
     BookDetailsComponent,
     BillingDetailsComponent,
-    DialogBodyComponent
+    DialogBodyComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,9 +33,11 @@ import { CartandcollectionModule } from './cartandcollection/cartandcollection.m
     HttpClientModule,
     ReactiveFormsModule,
     MaterialModule,
-    CartandcollectionModule
+    CartModule,
+    CollectionModule,
+    SharedModule,
   ],
   providers: [ApiserviceService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

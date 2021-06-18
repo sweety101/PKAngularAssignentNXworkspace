@@ -23,6 +23,19 @@ module.exports = () => {
       reports: ['html', 'lcovonly'],
       fixWebpackSourcePaths: true,
     },
+    coverageReporter: {
+      dir: require('path').join(__dirname, './coverage/AngularAssign'),
+      subdir: '.',
+      reporters: [{ type: 'html' }, { type: 'text-summary' }],
+      check: {
+        global: {
+          statements: 80,
+          branches: 80,
+          functions: 80,
+          lines: 80,
+        },
+      },
+    },
     reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,

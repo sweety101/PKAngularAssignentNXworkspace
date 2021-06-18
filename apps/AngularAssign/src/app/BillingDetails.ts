@@ -1,7 +1,7 @@
 export interface BillingDetails {
-    address: String;
-    email: String;
-    id: String;
-    name: String;
-    phoneNumber: String;
+  address: string;
+  email: string;
+  id: string;
+  name: string;
+  phoneNumber: string;
 }

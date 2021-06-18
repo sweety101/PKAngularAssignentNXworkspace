@@ -1,23 +1,24 @@
 .iconPadding {
-    padding: 12px;
+  padding: 12px;
 }
 .card-width {
-    width: 50%;
+  width: 50%;
 }
-/* .card-padding {
-    padding: 16px !important ;
-} */
 .content-margin {
-    margin: 50px;
+  margin: 50px;
 }
 .card-size {
-    padding: 16px !important;
-    height: 95%;
-    width: 90%;
+  padding: 16px !important;
+  height: 95%;
+  width: 90%;
 }
 .display {
-    justify-content: flex-end;
+  justify-content: flex-end;
 }
-.content-height{
-    height: 88vh;
+.content-height {
+  height: 88vh;
+}
+.mat-card-header-text {
+  width: 100%;
+  margin: 0 -16px !important;
 }
