@@ -29,6 +29,16 @@ describe('MyCollectionsComponent', () => {
       new appActions.NavigateToBookDetails(id)
     );
   });
+  it('dispatchNavigateToBillingDetails method', () => {
+    const id = 'id';
+    spyOn(store, 'dispatch').withArgs(
+      new appActions.NavigateToBillingDetails(id)
+    );
+    facade.dispatchNavigateToBillingDetails(id);
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new appActions.NavigateToBillingDetails(id)
+    );
+  });
   it('dispatchNavigateToCart method', () => {
     spyOn(store, 'dispatch').withArgs(new appActions.NavigateToCart());
     facade.dispatchNavigateToCart();
@@ -53,6 +63,18 @@ describe('MyCollectionsComponent', () => {
     facade.dispatchAddInCart(data.bookList[0]);
     expect(store.dispatch).toHaveBeenCalledWith(
       new appActions.AddIncart(data.bookList[0])
+    );
+  });
+  it('dispatchNoOfBooks method', () => {
+    spyOn(store, 'dispatch').withArgs(new appActions.noOfBooks(0));
+    facade.dispatchNoOfBooks(0);
+    expect(store.dispatch).toHaveBeenCalledWith(new appActions.noOfBooks(0));
+  });
+  it('dispatchDeleteIncart method', () => {
+    spyOn(store, 'dispatch').withArgs(new appActions.DeleteIncart('id'));
+    facade.dispatchDeleteIncart('id');
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new appActions.DeleteIncart('id')
     );
   });
 });
