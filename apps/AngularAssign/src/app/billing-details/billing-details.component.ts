@@ -3,9 +3,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DialogBodyComponent } from '../dialog-body/dialog-body.component';
 import { ActivatedRoute } from '@angular/router';
-import { ApiserviceService } from '../apiservice.service';
 import { BillingDetails } from '../BillingDetails';
 import { Subscription } from 'rxjs';
+import { Book } from '../Book';
+import { AppFacade } from '../NgrxStoreModule/app.facade';
 
 @Component({
   selector: 'app-billing-details',
@@ -16,16 +17,25 @@ export class BillingDetailsComponent implements OnInit, OnDestroy {
   billingForm: FormGroup;
   bookId = '';
   subscription: Subscription;
+  subscription1: Subscription;
+  bookList: Book[];
+  booksPurchased: Book[];
+  bookAlreadyPurchased: boolean;
+  book: Book;
   constructor(
     private formBuilder: FormBuilder,
     private matDialog: MatDialog,
-    private apiService: ApiserviceService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private appFacade: AppFacade
   ) {}
   ngOnInit(): void {
-    this.apiService.bookPurchased(false);
-    const routeParams = this.route.params;
-    this.subscription = routeParams.subscribe((params) => {
+    this.appFacade.selectBooks().subscribe((data) => {
+      this.bookList = data.bookList;
+      this.booksPurchased = data.booksPurchased;
+      this.bookAlreadyPurchased = data.booksAlreadyPurchased;
+    });
+
+    this.subscription = this.getParams().subscribe((params) => {
       this.bookId = params.id;
     });
     this.billingForm = this.formBuilder.group({
@@ -35,25 +45,30 @@ export class BillingDetailsComponent implements OnInit, OnDestroy {
       address: ['', Validators.required],
     });
   }
+  getParams(): ActivatedRoute['params'] {
+    return this.route.params;
+  }
   openDialog(value: BillingDetails): void {
     value.id = this.bookId;
     const dialogConfig = new MatDialogConfig();
     this.matDialog.open(DialogBodyComponent, dialogConfig);
-    for (let i = 0; i < this.apiService.booksList.length; i++) {
-      if (this.apiService.booksList[i].id == this.bookId) {
-        for (let j = 0; j < this.apiService.booksPurchased.length; j++) {
-          if (this.apiService.booksPurchased[j].id == this.bookId) {
-            this.apiService.bookPurchased(true);
-          }
-        }
+    this.bookAlreadyPurchased = false;
+    for (let i = 0; i < this.bookList.length; i++) {
+      if (this.bookList[i].id == this.bookId) {
+        this.book = this.bookList[i];
+        this.checkBooksPurchased();
       }
-      if (
-        this.apiService.booksList[i].id == this.bookId &&
-        !this.apiService.bookAlreadyPurchased
-      ) {
-        this.apiService.booksPurchased.push(this.apiService.booksList[i]);
-        this.apiService.billingDetails.push(value);
-        this.apiService.noOfBooksPurchased = this.apiService.booksPurchased.length;
+    }
+    if (!this.bookAlreadyPurchased) {
+      this.appFacade.dispatchAddBooksPurchased(this.book);
+      this.appFacade.dispatchnoOfBooksPurchased(this.booksPurchased.length);
+      this.appFacade.dispatchAddBillingDetials(value);
+    }
+  }
+  checkBooksPurchased(): void {
+    for (let j = 0; j < this.booksPurchased.length; j++) {
+      if (this.booksPurchased[j].id == this.bookId) {
+        this.appFacade.dispatchBookAlreadyPurchased(true);
       }
     }
   }

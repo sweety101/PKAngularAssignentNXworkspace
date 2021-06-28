@@ -1,17 +1,22 @@
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AppComponent } from './app.component';
-import { ApiserviceService } from './apiservice.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatListModule } from '@angular/material/list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './NgrxStoreModule';
+import { EffectsModule } from '@ngrx/effects';
+import { AppEffects } from './NgrxStoreModule/app.effects';
+import { AppFacade } from './NgrxStoreModule/app.facade';
+import { of } from 'rxjs';
 
 describe('AppComponent', () => {
-  let service: ApiserviceService;
+  let service: AppFacade;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
@@ -23,11 +28,13 @@ describe('AppComponent', () => {
         MatBadgeModule,
         BrowserAnimationsModule,
         MatListModule,
+        StoreModule.forRoot(reducers),
+        EffectsModule.forRoot([AppEffects]),
       ],
       declarations: [AppComponent],
-      providers: [ApiserviceService],
+      providers: [AppFacade],
     }).compileComponents();
-    service = TestBed.inject(ApiserviceService);
+    service = TestBed.inject(AppFacade);
   });
 
   it('should create the app', () => {
@@ -41,23 +48,23 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     expect(app.title).toEqual('AngularAssign');
   });
-  it(`should have books property as false`, () => {
+  it(`ngOnInit`, fakeAsync(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.books).toEqual(false);
-  });
-  it(`ngOnInit`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
+    const returnValue = {
+      booksInCart: [],
+      bookList: [],
+      booksPurchased: [],
+      billingDetails: [],
+      noOfBooksPurchased: 1,
+      noOfBooks: 1,
+      booksAlreadyPurchased: false,
+      recentSearches: [],
+    };
+    spyOn(service, 'selectBooks').and.returnValue(of(returnValue));
     app.ngOnInit();
-    expect(app.cartCount).toEqual(service.noOfBooks);
-    expect(app.collectionCount).toEqual(service.noOfBooksPurchased);
-  });
-  it(`ngDoCheck`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    app.ngDoCheck();
-    expect(app.cartCount).toEqual(service.noOfBooks);
-    expect(app.collectionCount).toEqual(service.noOfBooksPurchased);
-  });
+    tick();
+    expect(app.cartCount).toEqual(1);
+    expect(app.collectionCount).toEqual(1);
+  }));
 });

@@ -1,6 +1,6 @@
 <div class="content-height">
   <div
-    *ngIf="books"
+    *ngIf="booksIncart"
     fxLayout="row"
     fxLayout.xs="column"
     fxLayoutWrap
@@ -14,7 +14,7 @@
           fxFlex="50%"
           fxFlex.xs="100%"
           fxFlex.sm="100%"
-          *ngFor="let res of books; trackBy: trackByTitle"
+          *ngFor="let res of booksIncart; trackBy: trackByTitle"
         >
           <mat-card class="card-size card-padding">
             <mat-card-header fxLayout="row">

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiserviceService } from '../../apiservice.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Book } from '../../Book';
+import { AppFacade } from '../../NgrxStoreModule/app.facade';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -10,27 +11,31 @@ import { Book } from '../../Book';
 })
 export class CartComponent implements OnInit {
   cartId = '';
-  books: Book[] = [];
+  books: Observable<{ booksInCart: Book[] }>;
   exists = false;
   subscription: Subscription;
-  constructor(private apiService: ApiserviceService, private router: Router) {}
+  booksIncart: Book[];
+  constructor(
+    private apiService: ApiserviceService,
+    private router: Router,
+    private appFacade: AppFacade
+  ) {}
 
   ngOnInit(): void {
-    this.books = this.apiService.booksInCart;
+    this.appFacade.selectBooks().subscribe((data) => {
+      this.booksIncart = data.booksInCart;
+    });
   }
   trackByTitle(index: number, currentItem: Book): string {
     return currentItem.volumeInfo.title;
   }
   navigateToBillingDetails(id: string): void {
-    this.apiService.navigatingFromCart(id);
-    this.router.navigate(['/billingDetails', id]);
+    this.appFacade.dispatchDeleteIncart(id);
+    this.appFacade.dispatchNoOfBooks(this.booksIncart.length);
+    this.appFacade.dispatchNavigateToBillingDetails(id);
   }
   deleteFromCart(id: string): void {
-    for (let i = 0; i < this.apiService.booksInCart.length; i++) {
-      if (this.apiService.booksInCart[i].id == id) {
-        this.apiService.booksInCart.splice(i, 1);
-      }
-    }
-    this.apiService.noOfBooks = this.apiService.booksInCart.length;
+    this.appFacade.dispatchDeleteIncart(id);
+    this.appFacade.dispatchNoOfBooks(this.booksIncart.length);
   }
 }

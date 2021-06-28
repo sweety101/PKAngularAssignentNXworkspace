@@ -1,38 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ApiserviceService } from '../../apiservice.service';
 import { Book } from '../../Book';
+import { Subscription } from 'rxjs';
+import { BillingDetails } from '../../BillingDetails';
+import { AppFacade } from '../../NgrxStoreModule/app.facade';
 
 @Component({
   selector: 'app-my-collections',
   templateUrl: './my-collections.component.html',
   styleUrls: ['./my-collections.component.css'],
 })
-export class MyCollectionsComponent implements OnInit {
+export class MyCollectionsComponent implements OnInit, OnDestroy {
   booksCollectionDetails: Book[] = [];
-  constructor(private apiService: ApiserviceService) {}
+  subscription: Subscription;
+  booksPurchased: Book[];
+  billingDetails: BillingDetails[];
+  constructor(
+    private apiService: ApiserviceService,
+    private appFacade: AppFacade
+  ) {}
 
   ngOnInit(): void {
-    for (let i = 0; i < this.apiService.booksPurchased.length; i++) {
-      for (let j = 0; j < this.apiService.billingDetails.length; j++) {
-        if (
-          this.apiService.billingDetails[j].id ==
-          this.apiService.booksPurchased[i].id
-        ) {
-          this.apiService.booksPurchased[
-            i
-          ].address = this.apiService.billingDetails[j].address;
-          this.apiService.booksPurchased[
-            i
-          ].email = this.apiService.billingDetails[j].email;
-          this.apiService.booksPurchased[
-            i
-          ].name = this.apiService.billingDetails[j].name;
-          this.apiService.booksPurchased[
-            i
-          ].phoneNumber = this.apiService.billingDetails[j].phoneNumber;
-          this.booksCollectionDetails.push(this.apiService.booksPurchased[i]);
+    this.subscription = this.appFacade.selectBooks().subscribe((data) => {
+      this.booksPurchased = data.booksPurchased;
+      this.billingDetails = data.billingDetails;
+    });
+    for (let i = 0; i < this.booksPurchased.length; i++) {
+      for (let j = 0; j < this.billingDetails.length; j++) {
+        if (this.billingDetails[j].id == this.booksPurchased[i].id) {
+          this.booksPurchased[i].address = this.billingDetails[j].address;
+          this.booksPurchased[i].email = this.billingDetails[j].email;
+          this.booksPurchased[i].name = this.billingDetails[j].name;
+          this.booksPurchased[i].phoneNumber = this.billingDetails[
+            j
+          ].phoneNumber;
+          this.booksCollectionDetails.push(this.booksPurchased[i]);
         }
       }
     }
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

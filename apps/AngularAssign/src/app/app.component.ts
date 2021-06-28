@@ -1,23 +1,21 @@
-import { Component } from '@angular/core';
-import { ApiserviceService } from './apiservice.service';
+import { Component, OnInit } from '@angular/core';
+import { AppFacade } from './NgrxStoreModule/app.facade';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'AngularAssign';
-  books = false;
   cartCount = 0;
   collectionCount = 0;
-  constructor(private apiService: ApiserviceService) {}
+
+  constructor(private appFacade: AppFacade) {}
   ngOnInit(): void {
-    this.cartCount = this.apiService.noOfBooks;
-    this.collectionCount = this.apiService.noOfBooksPurchased;
-  }
-  ngDoCheck(): void {
-    this.cartCount = this.apiService.noOfBooks;
-    this.collectionCount = this.apiService.noOfBooksPurchased;
+    this.appFacade.selectBooks().subscribe((data) => {
+      this.cartCount = data.noOfBooks;
+      this.collectionCount = data.noOfBooksPurchased;
+    });
   }
 }

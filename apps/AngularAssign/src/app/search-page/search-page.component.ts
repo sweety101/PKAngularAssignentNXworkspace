@@ -1,37 +1,33 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ApiserviceService } from '../apiservice.service';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { Book } from '../Book';
-import { Subscription } from 'rxjs';
+import { AppFacade } from '../NgrxStoreModule/app.facade';
 
 @Component({
   selector: 'app-search-page',
   templateUrl: './search-page.component.html',
   styleUrls: ['./search-page.component.css'],
 })
-export class SearchPageComponent implements OnInit, OnDestroy {
-  books = false;
+export class SearchPageComponent implements OnInit {
+  books: boolean;
   results: Book[];
-  subscription: Subscription;
-  constructor(private apiService: ApiserviceService, private router: Router) {}
+  key = 'AIzaSyDQO3ciIFhJaxNrRJR93nl9YpjxpTG_YLM';
+  searchString = 'React';
+  constructor(private appFacade: AppFacade) {}
   ngOnInit(): void {
-    this.getData('React');
+    this.getData('React', this.key);
   }
-  getData(value: string): void {
-    this.apiService.searchString = value;
-    this.subscription = this.apiService.search().subscribe((data) => {
+  getData(value: string, key: string): void {
+    this.searchString = value;
+    this.appFacade.dispatchGetBooks(value, key);
+    this.appFacade.selectBooks().subscribe((data) => {
       this.books = true;
-      this.apiService.booksList = data;
-      this.results = data;
+      this.results = data.bookList;
     });
   }
   trackByTitle(index: number, currentItem: Book): string {
     return currentItem.volumeInfo.title;
   }
   navigateToBookDetails(id: string): void {
-    this.router.navigate(['/bookDetails', id]);
-  }
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.appFacade.dispatchNavigateToBookDetails(id);
   }
 }

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Book } from '../Book';
 import { Subscription } from 'rxjs';
-
+import { AppFacade } from '../NgrxStoreModule/app.facade';
 @Component({
   selector: 'app-book-details',
   templateUrl: './book-details.component.html',
@@ -13,46 +13,57 @@ import { Subscription } from 'rxjs';
 export class BookDetailsComponent implements OnInit, OnDestroy {
   id = '';
   bookDetails: Book;
+  bookList: Book[];
   subscription: Subscription;
+  subscriptionOne: Subscription;
   exists = false;
+  booksIncart: Book[];
   constructor(
     private apiService: ApiserviceService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private appFacade: AppFacade
   ) {}
   ngOnInit(): void {
-    const routeParams = this.route.params;
-    this.subscription = routeParams.subscribe((params) => {
+    this.subscriptionOne = this.appFacade.selectBooks().subscribe((data) => {
+      this.booksIncart = data.booksInCart;
+      this.bookList = data.bookList;
+    });
+    this.subscription = this.getParams().subscribe((params) => {
       this.id = params.id;
     });
-    for (let i = 0; i < this.apiService.booksList.length; i++) {
-      if (this.apiService.booksList[i].id == this.id) {
-        this.bookDetails = this.apiService.booksList[i];
+    for (let i = 0; i < this.bookList.length; i++) {
+      if (this.bookList[i].id == this.id) {
+        this.bookDetails = this.bookList[i];
       }
     }
   }
 
+  getParams(): ActivatedRoute['params'] {
+    return this.route.params;
+  }
   navigateToCart(id: string): void {
-    this.router.navigate(['/cart']);
-    for (let i = 0; i < this.apiService.booksList.length; i++) {
-      if (this.apiService.booksList[i].id == id) {
-        for (let i = 0; i < this.apiService.booksInCart.length; i++) {
-          if (this.apiService.booksInCart[i].id == id) {
+    this.appFacade.dispatchNavigateToCart();
+    for (let i = 0; i < this.bookList.length; i++) {
+      if (this.bookList[i].id == id) {
+        for (let i = 0; i < this.booksIncart.length; i++) {
+          if (this.booksIncart[i].id == id) {
             this.exists = true;
           }
         }
         if (!this.exists) {
-          this.apiService.booksInCart.push(this.apiService.booksList[i]);
+          this.appFacade.dispatchAddInCart(this.bookList[i]);
+          this.appFacade.dispatchNoOfBooks(this.booksIncart.length);
         }
       }
     }
-    this.apiService.noOfBooks = this.apiService.booksInCart.length;
   }
 
   navigateToBillingDetails(id: string): void {
-    this.router.navigate(['/billingDetails', id]);
+    this.appFacade.dispatchNavigateToBillingDetails(id);
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.subscriptionOne.unsubscribe();
   }
 }

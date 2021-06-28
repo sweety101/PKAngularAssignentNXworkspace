@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { ApiserviceService } from '../apiservice.service';
+import { AppFacade } from '../NgrxStoreModule/app.facade';
 
 @Component({
   selector: 'app-dialog-body',
@@ -8,14 +8,16 @@ import { ApiserviceService } from '../apiservice.service';
   styleUrls: ['./dialog-body.component.css'],
 })
 export class DialogBodyComponent implements OnInit {
-  bookAlreadyPurchased = false;
+  bookAlreadyPurchased: boolean;
   constructor(
     public dialogRef: MatDialogRef<DialogBodyComponent>,
-    private apiService: ApiserviceService
+    private appFacade: AppFacade
   ) {}
 
   ngOnInit(): void {
-    this.bookAlreadyPurchased = this.apiService.bookAlreadyPurchased;
+    this.appFacade.selectBooks().subscribe((data) => {
+      this.bookAlreadyPurchased = data.booksAlreadyPurchased;
+    });
   }
   close(): void {
     this.dialogRef.close('Thanks for using me!');

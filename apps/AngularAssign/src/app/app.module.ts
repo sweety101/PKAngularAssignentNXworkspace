@@ -16,7 +16,11 @@ import { MaterialModule } from './material.module';
 import { CartModule } from './cart/cart.module';
 import { CollectionModule } from './collection/collection.module';
 import { SharedModule } from './shared/shared.module';
-
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './NgrxStoreModule';
+import { EffectsModule } from '@ngrx/effects';
+import { AppEffects } from './NgrxStoreModule/app.effects';
+import { AppFacade } from './NgrxStoreModule/app.facade';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,8 +40,10 @@ import { SharedModule } from './shared/shared.module';
     CartModule,
     CollectionModule,
     SharedModule,
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([AppEffects]),
   ],
-  providers: [ApiserviceService],
+  providers: [ApiserviceService, AppFacade],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
