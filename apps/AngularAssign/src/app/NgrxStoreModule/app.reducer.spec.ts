@@ -79,6 +79,14 @@ describe('Store > Data > DataReducer', () => {
 
     expect(state.recentSearches).toEqual([payload.searchString]);
   });
+  it('SHOULD update GetBooksFail', () => {
+    const { initialState } = Reducer;
+    const payload = 'error';
+    const action = new Actions.GetBooksFail(payload);
+    const state = Reducer.appReducer(initialState, action);
+
+    expect(state.getBookError).toEqual(payload);
+  });
   it('SHOULD update DeleteIncart', () => {
     const { initialState } = Reducer;
     const payload = data.bookList[0].id;
@@ -93,5 +101,13 @@ describe('Store > Data > DataReducer', () => {
     const state = Reducer.appReducer(initialState, action);
 
     expect(state.booksInCart).toEqual([payload]);
+  });
+  it('SHOULD update AddToCollections', () => {
+    const { initialState } = Reducer;
+    const payload = data.bookList[0];
+    const action = new Actions.AddToCollections(payload);
+    const state = Reducer.appReducer(initialState, action);
+
+    expect(state.bookCollection).toEqual([payload]);
   });
 });

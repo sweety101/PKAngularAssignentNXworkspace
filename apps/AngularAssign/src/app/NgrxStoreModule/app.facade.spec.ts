@@ -65,6 +65,15 @@ describe('MyCollectionsComponent', () => {
       new appActions.AddIncart(data.bookList[0])
     );
   });
+  it('dispatchAddToCollections method', () => {
+    spyOn(store, 'dispatch').withArgs(
+      new appActions.AddToCollections(data.bookList[0])
+    );
+    facade.dispatchAddToCollections(data.bookList[0]);
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new appActions.AddToCollections(data.bookList[0])
+    );
+  });
   it('dispatchNoOfBooks method', () => {
     spyOn(store, 'dispatch').withArgs(new appActions.noOfBooks(0));
     facade.dispatchNoOfBooks(0);

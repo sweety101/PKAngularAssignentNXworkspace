@@ -1,8 +1,8 @@
-import { Observable, of } from 'rxjs';
+import { observable, Observable, of, throwError } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 
@@ -44,9 +44,9 @@ describe('Store > Data > DataEffect', () => {
     service = TestBed.inject(ApiserviceService);
   });
 
-  it('SHOULD dispatch GetBooks action WHEN GetBookList action is dispatched', () => {
+  it('SHOULD dispatch GetBookList action WHEN GetBooks action is dispatched', () => {
     spyOn(service, 'get').and.returnValue(of(data.bookList));
-
+    service.key = 'AIzaSyDQO3ciIFhJaxNrRJR93nl9YpjxpTG_YLM';
     actions$ = of({
       type: Actions.GET_BOOKS,
       payload: { searchString: 'React', key: 'id' },
@@ -54,6 +54,27 @@ describe('Store > Data > DataEffect', () => {
     effects.getBooks.subscribe((action) => {
       expect(action.type).toBe(Actions.GET_BOOK_LIST);
       expect(action.payload).toEqual(data.bookList);
+    });
+  });
+
+  it('SHOULD throw error WHEN GetBooks action is dispatched', () => {
+    const error = {
+      error: {
+        error: {
+          message: 'error with status 404',
+        },
+      },
+    };
+    service.key = 'AIzaSyDQO3ciIFhJaxNrRJR93nl9YpjxpTG_YL';
+    spyOn(service, 'get').and.returnValue(throwError(error));
+
+    actions$ = of({
+      type: Actions.GET_BOOKS,
+      payload: { searchString: 'React', key: 'id' },
+    });
+    effects.getBooks.subscribe((action) => {
+      expect(action.type).toBe(Actions.GET_BOOKS_FAIL);
+      expect(action.payload).toEqual(error.error.error.message);
     });
   });
   it('SHOULD dispatch NAVIGATE_TO_BOOK_DETAILS action', () => {

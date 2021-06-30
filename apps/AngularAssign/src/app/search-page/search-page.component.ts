@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiserviceService } from '../apiservice.service';
 import { Book } from '../Book';
 import { AppFacade } from '../NgrxStoreModule/app.facade';
 
@@ -10,12 +11,16 @@ import { AppFacade } from '../NgrxStoreModule/app.facade';
 export class SearchPageComponent implements OnInit {
   books: boolean;
   results: Book[];
-  key = 'AIzaSyDQO3ciIFhJaxNrRJR93nl9YpjxpTG_YL';
   searchString = 'React';
+  key: string;
   error: string;
-  constructor(private appFacade: AppFacade) {}
+  constructor(
+    private appFacade: AppFacade,
+    private apiservice: ApiserviceService
+  ) {}
   ngOnInit(): void {
-    this.getData('React', this.key);
+    this.getData('React', this.apiservice.key);
+    this.key = this.apiservice.key;
   }
   getData(value: string, key: string): void {
     this.searchString = value;
@@ -23,6 +28,7 @@ export class SearchPageComponent implements OnInit {
     this.appFacade.selectBooks().subscribe((data) => {
       this.books = true;
       this.error = data.getBookError;
+      console.log(this.error);
       this.results = data.bookList;
     });
   }

@@ -8,6 +8,7 @@ import { Book } from './Book';
   providedIn: 'root',
 })
 export class ApiserviceService {
+  key = 'AIzaSyDQO3ciIFhJaxNrRJR93nl9YpjxpTG_YLM';
   constructor(private httpClient: HttpClient) {}
   get(searchString: string, key: string): Observable<Book[]> {
     return this.httpClient

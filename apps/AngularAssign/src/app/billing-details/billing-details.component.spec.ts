@@ -57,7 +57,7 @@ describe('BillingDetailsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('openDialog Function bookAlreadyPurchased', fakeAsync(() => {
+  it('openDialog Function bookAlreadyPurchased', () => {
     const value = {
       id: 'ppjUtAEACAAJ',
       address: 'wing-6',
@@ -65,29 +65,10 @@ describe('BillingDetailsComponent', () => {
       name: 'sweety',
       phoneNumber: '9897172571',
     };
-    const returnValue = {
-      booksInCart: [],
-      bookList: data.bookList,
-      booksPurchased: [],
-      billingDetails: [],
-      noOfBooksPurchased: 0,
-      noOfBooks: 0,
-      booksAlreadyPurchased: false,
-      recentSearches: [],
-      bookCollection: [],
-      getBookError: '',
-    };
-    component.bookId = 'ppjUtAEACAAJ';
-    component.bookAlreadyPurchased = false;
-    component.book = data.bookList[0];
-    spyOn(service, 'selectBooks').and.returnValue(of(returnValue));
     spyOn(service, 'dispatchAddBooksPurchased');
     spyOn(service, 'dispatchnoOfBooksPurchased');
     spyOn(service, 'dispatchAddBillingDetials');
-    component.ngOnInit();
-    tick();
     component.openDialog(value);
-    expect(value.id).toEqual(component.bookId);
     if (!component.bookAlreadyPurchased) {
       expect(component.bookAlreadyPurchased).toEqual(false);
       service.dispatchAddBooksPurchased(component.book);
@@ -97,7 +78,7 @@ describe('BillingDetailsComponent', () => {
       expect(service.dispatchnoOfBooksPurchased).toHaveBeenCalled();
       expect(service.dispatchAddBillingDetials).toHaveBeenCalled();
     }
-  }));
+  });
   it('ngOnInit', fakeAsync(() => {
     const value = {
       id: 'ppjUtAEACAAJ',

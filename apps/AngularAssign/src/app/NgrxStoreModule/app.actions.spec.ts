@@ -96,6 +96,15 @@ describe('Test Actions', () => {
       payload,
     });
   });
+  it('SHOULD create a GET_BOOKS_FAIL action containing a payload', () => {
+    const payload = 'error';
+    const action = new Actions.GetBooksFail(payload);
+
+    expect({ ...action }).toEqual({
+      type: Actions.GET_BOOKS_FAIL,
+      payload,
+    });
+  });
   it('SHOULD create a DELETE_INCART action containing a payload', () => {
     const payload = 'ppjUtAEACAAJ';
     const action = new Actions.DeleteIncart(payload);
@@ -111,6 +120,15 @@ describe('Test Actions', () => {
 
     expect({ ...action }).toEqual({
       type: Actions.ADD_INCART,
+      payload,
+    });
+  });
+  it('SHOULD create a ADD_TO_COLLECTIONS action containing a payload', () => {
+    const payload = data.bookList[0];
+    const action = new Actions.AddToCollections(payload);
+
+    expect({ ...action }).toEqual({
+      type: Actions.ADD_TO_COLLECTIONS,
       payload,
     });
   });
