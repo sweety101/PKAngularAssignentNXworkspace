@@ -10,8 +10,9 @@ import { AppFacade } from '../NgrxStoreModule/app.facade';
 export class SearchPageComponent implements OnInit {
   books: boolean;
   results: Book[];
-  key = 'AIzaSyDQO3ciIFhJaxNrRJR93nl9YpjxpTG_YLM';
+  key = 'AIzaSyDQO3ciIFhJaxNrRJR93nl9YpjxpTG_YL';
   searchString = 'React';
+  error: string;
   constructor(private appFacade: AppFacade) {}
   ngOnInit(): void {
     this.getData('React', this.key);
@@ -21,6 +22,7 @@ export class SearchPageComponent implements OnInit {
     this.appFacade.dispatchGetBooks(value, key);
     this.appFacade.selectBooks().subscribe((data) => {
       this.books = true;
+      this.error = data.getBookError;
       this.results = data.bookList;
     });
   }

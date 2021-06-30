@@ -1,10 +1,11 @@
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, catchError } from 'rxjs/operators';
 import * as appActions from './app.action';
-import { Book } from '../Book';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiserviceService } from '../apiservice.service';
+import { of } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class AppEffects {
@@ -17,6 +18,11 @@ export class AppEffects {
         .pipe(
           map((data) => {
             return new appActions.GetBookList(data);
+          }),
+          catchError((errorRes: HttpErrorResponse) => {
+            return of(
+              new appActions.GetBooksFail(errorRes.error.error.message)
+            );
           })
         );
     })

@@ -50,4 +50,7 @@ export class AppFacade {
   dispatchDeleteIncart(value: string): void {
     this.store.dispatch(new appActions.DeleteIncart(value));
   }
+  dispatchAddToCollections(value: Book): void {
+    this.store.dispatch(new appActions.AddToCollections(value));
+  }
 }

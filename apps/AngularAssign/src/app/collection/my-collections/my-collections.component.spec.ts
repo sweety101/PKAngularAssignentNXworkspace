@@ -56,25 +56,16 @@ describe('MyCollectionsComponent', () => {
       noOfBooks: 0,
       booksAlreadyPurchased: false,
       recentSearches: [],
+      bookCollection: [],
+      getBookError: '',
     };
     spyOn(service, 'selectBooks').and.returnValue(of(returnValue));
-    spyOn(service, 'dispatchNavigateToCart');
+    spyOn(service, 'dispatchAddToCollections');
     component.ngOnInit();
     tick();
     expect(component.billingDetails[0].id).toEqual(
       component.booksPurchased[0].id
     );
-    expect(component.booksPurchased[0].address).toEqual(
-      component.billingDetails[0].address
-    );
-    expect(component.booksPurchased[0].email).toEqual(
-      component.billingDetails[0].email
-    );
-    expect(component.booksPurchased[0].name).toEqual(
-      component.billingDetails[0].name
-    );
-    expect(component.booksPurchased[0].phoneNumber).toEqual(
-      component.billingDetails[0].phoneNumber
-    );
+    expect(service.dispatchAddToCollections).toHaveBeenCalled();
   }));
 });

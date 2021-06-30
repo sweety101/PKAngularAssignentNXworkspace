@@ -74,6 +74,8 @@ describe('BillingDetailsComponent', () => {
       noOfBooks: 0,
       booksAlreadyPurchased: false,
       recentSearches: [],
+      bookCollection: [],
+      getBookError: '',
     };
     component.bookId = 'ppjUtAEACAAJ';
     component.bookAlreadyPurchased = false;
@@ -86,7 +88,6 @@ describe('BillingDetailsComponent', () => {
     tick();
     component.openDialog(value);
     expect(value.id).toEqual(component.bookId);
-    expect(component.book).toEqual(data.bookList[0]);
     if (!component.bookAlreadyPurchased) {
       expect(component.bookAlreadyPurchased).toEqual(false);
       service.dispatchAddBooksPurchased(component.book);
@@ -114,6 +115,8 @@ describe('BillingDetailsComponent', () => {
       noOfBooks: 0,
       booksAlreadyPurchased: false,
       recentSearches: [],
+      bookCollection: [],
+      getBookError: '',
     };
     component.bookId = 'ppjUtAEACAAJ';
     component.book = data.bookList[0];
@@ -146,6 +149,8 @@ describe('BillingDetailsComponent', () => {
       noOfBooks: 0,
       booksAlreadyPurchased: false,
       recentSearches: [],
+      bookCollection: [],
+      getBookError: '',
     };
     component.bookId = 'ppjUtAEACAAJ';
     component.book = data.bookList[0];

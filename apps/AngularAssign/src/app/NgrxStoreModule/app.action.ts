@@ -5,6 +5,7 @@ import { Book } from '../Book';
 export const ADD_INCART = 'ADD_INCART';
 export const DELETE_INCART = 'DELETE_INCART';
 export const GET_BOOKS = 'GET_BOOKS';
+export const GET_BOOKS_FAIL = 'GET_BOOKS_FAIL';
 export const GET_BOOK_LIST = 'GET_BOOK_LIST';
 export const ADD_BOOKS_PURCHASED = 'ADD_BOOKS_PURCHASED';
 export const ADD_BILLING_DETAILS = 'ADD_BILLING_DETAILS';
@@ -14,6 +15,7 @@ export const BOOK_ALREADY_PURCHASED = 'BOOK_ALREADY_PURCHASED';
 export const NAVIGATE_TO_BILLING_DETAILS = 'NAVIGATE_TO_BILLING_DETAILS';
 export const NAVIGATE_TO_CART = 'NAVIGATE_TO_CART';
 export const NAVIGATE_TO_BOOK_DETAILS = 'NAVIGATE_TO_BOOK_DETAILS';
+export const ADD_TO_COLLECTIONS = 'ADD_TO_COLLECTIONS';
 
 export class AddIncart implements Action {
   readonly type = ADD_INCART;
@@ -28,6 +30,10 @@ export class DeleteIncart implements Action {
 export class GetBooks implements Action {
   readonly type = GET_BOOKS;
   constructor(public payload: { searchString: string; key: string }) {}
+}
+export class GetBooksFail implements Action {
+  readonly type = GET_BOOKS_FAIL;
+  constructor(public payload: string) {}
 }
 export class GetBookList implements Action {
   readonly type = GET_BOOK_LIST;
@@ -64,10 +70,15 @@ export class NavigateToBookDetails implements Action {
   readonly type = NAVIGATE_TO_BOOK_DETAILS;
   constructor(public payload: string) {}
 }
+export class AddToCollections implements Action {
+  readonly type = ADD_TO_COLLECTIONS;
+  constructor(public payload: Book) {}
+}
 export type Actions =
   | AddIncart
   | DeleteIncart
   | GetBooks
+  | GetBooksFail
   | GetBookList
   | AddBooksPurchased
   | AddBillingDetials
@@ -76,4 +87,5 @@ export type Actions =
   | BookAlreadyPurchased
   | NavigateToBillingDetails
   | NavigateToCart
-  | NavigateToBookDetails;
+  | NavigateToBookDetails
+  | AddToCollections;

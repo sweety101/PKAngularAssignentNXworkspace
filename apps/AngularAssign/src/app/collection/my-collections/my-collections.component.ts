@@ -24,6 +24,7 @@ export class MyCollectionsComponent implements OnInit, OnDestroy {
     this.subscription = this.appFacade.selectBooks().subscribe((data) => {
       this.booksPurchased = data.booksPurchased;
       this.billingDetails = data.billingDetails;
+      this.booksCollectionDetails = data.bookCollection;
     });
     for (let i = 0; i < this.booksPurchased.length; i++) {
       for (let j = 0; j < this.billingDetails.length; j++) {
@@ -34,7 +35,7 @@ export class MyCollectionsComponent implements OnInit, OnDestroy {
           this.booksPurchased[i].phoneNumber = this.billingDetails[
             j
           ].phoneNumber;
-          this.booksCollectionDetails.push(this.booksPurchased[i]);
+          this.appFacade.dispatchAddToCollections(this.booksPurchased[i]);
         }
       }
     }

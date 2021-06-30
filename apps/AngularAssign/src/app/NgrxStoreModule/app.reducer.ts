@@ -11,6 +11,8 @@ export interface appState {
   noOfBooks: number;
   booksAlreadyPurchased: boolean;
   recentSearches: string[];
+  bookCollection: Book[];
+  getBookError: string;
 }
 export const initialState: appState = {
   booksInCart: [],
@@ -21,6 +23,8 @@ export const initialState: appState = {
   noOfBooks: 0,
   booksAlreadyPurchased: false,
   recentSearches: [],
+  bookCollection: [],
+  getBookError: '',
 };
 export function appReducer(
   state: appState = initialState,
@@ -31,13 +35,6 @@ export function appReducer(
       return {
         ...state,
         booksInCart: [...state.booksInCart, action.payload],
-        bookList: [...state.bookList],
-        booksPurchased: [...state.booksPurchased],
-        billingDetails: [...state.billingDetails],
-        noOfBooksPurchased: state.noOfBooksPurchased,
-        noOfBooks: state.noOfBooks,
-        booksAlreadyPurchased: state.booksAlreadyPurchased,
-        recentSearches: state.recentSearches,
       };
     }
     case appActions.DELETE_INCART: {
@@ -46,104 +43,60 @@ export function appReducer(
         booksInCart: state.booksInCart.filter((book) => {
           return book.id !== action.payload;
         }),
-        bookList: [...state.bookList],
-        booksPurchased: [...state.booksPurchased],
-        billingDetails: [...state.billingDetails],
-        noOfBooksPurchased: state.noOfBooksPurchased,
-        noOfBooks: state.noOfBooks,
-        booksAlreadyPurchased: state.booksAlreadyPurchased,
-        recentSearches: state.recentSearches,
       };
     }
     case appActions.GET_BOOKS: {
       return {
         ...state,
-        booksInCart: [...state.booksInCart],
-        bookList: [...state.bookList],
-        booksPurchased: [...state.booksPurchased],
-        billingDetails: [...state.billingDetails],
-        noOfBooksPurchased: state.noOfBooksPurchased,
-        noOfBooks: state.noOfBooks,
-        booksAlreadyPurchased: state.booksAlreadyPurchased,
         recentSearches: [...state.recentSearches, action.payload.searchString],
+      };
+    }
+    case appActions.GET_BOOKS_FAIL: {
+      return {
+        ...state,
+        getBookError: action.payload,
       };
     }
     case appActions.GET_BOOK_LIST: {
       return {
         ...state,
-        booksInCart: [...state.booksInCart],
         bookList: action.payload,
-        booksPurchased: [...state.booksPurchased],
-        billingDetails: [...state.billingDetails],
-        noOfBooksPurchased: state.noOfBooksPurchased,
-        noOfBooks: state.noOfBooks,
-        booksAlreadyPurchased: state.booksAlreadyPurchased,
-        recentSearches: state.recentSearches,
       };
     }
     case appActions.ADD_BOOKS_PURCHASED: {
       return {
         ...state,
-        booksInCart: [...state.booksInCart],
-        bookList: [...state.bookList],
         booksPurchased: [...state.booksPurchased, action.payload],
-        billingDetails: [...state.billingDetails],
-        noOfBooksPurchased: state.noOfBooksPurchased,
-        noOfBooks: state.noOfBooks,
-        booksAlreadyPurchased: state.booksAlreadyPurchased,
-        recentSearches: state.recentSearches,
       };
     }
     case appActions.ADD_BILLING_DETAILS: {
       return {
         ...state,
-        booksInCart: [...state.booksInCart],
-        bookList: [...state.bookList],
-        booksPurchased: [...state.booksPurchased],
         billingDetails: [...state.billingDetails, action.payload],
-        noOfBooksPurchased: state.noOfBooksPurchased,
-        noOfBooks: state.noOfBooks,
-        booksAlreadyPurchased: state.booksAlreadyPurchased,
-        recentSearches: state.recentSearches,
       };
     }
     case appActions.NO_OF_BOOKS: {
       return {
         ...state,
-        booksInCart: [...state.booksInCart],
-        bookList: [...state.bookList],
-        booksPurchased: [...state.booksPurchased],
-        billingDetails: [...state.billingDetails],
-        noOfBooksPurchased: state.noOfBooksPurchased,
         noOfBooks: action.payload,
-        booksAlreadyPurchased: state.booksAlreadyPurchased,
-        recentSearches: state.recentSearches,
       };
     }
     case appActions.NO_OF_BOOKSPURCHASED: {
       return {
         ...state,
-        booksInCart: [...state.booksInCart],
-        bookList: [...state.bookList],
-        booksPurchased: [...state.booksPurchased],
-        billingDetails: [...state.billingDetails],
         noOfBooksPurchased: action.payload,
-        noOfBooks: state.noOfBooks,
-        booksAlreadyPurchased: state.booksAlreadyPurchased,
-        recentSearches: state.recentSearches,
       };
     }
     case appActions.BOOK_ALREADY_PURCHASED: {
       return {
         ...state,
-        booksInCart: [...state.booksInCart],
-        bookList: [...state.bookList],
-        booksPurchased: [...state.booksPurchased],
-        billingDetails: [...state.billingDetails],
-        noOfBooksPurchased: state.noOfBooksPurchased,
-        noOfBooks: state.noOfBooks,
         booksAlreadyPurchased: action.payload,
-        recentSearches: state.recentSearches,
+      };
+    }
+    case appActions.ADD_TO_COLLECTIONS: {
+      return {
+        ...state,
+        bookCollection: [...state.bookCollection, action.payload],
       };
     }
     default:

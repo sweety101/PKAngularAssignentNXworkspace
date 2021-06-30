@@ -73,6 +73,8 @@ describe('BookDetailsComponent', () => {
       noOfBooks: 0,
       booksAlreadyPurchased: false,
       recentSearches: [],
+      bookCollection: [],
+      getBookError: '',
     };
     spyOn(service, 'selectBooks').and.returnValue(of(returnValue));
     component.ngOnInit();
@@ -104,6 +106,8 @@ describe('BookDetailsComponent', () => {
       noOfBooks: 0,
       booksAlreadyPurchased: false,
       recentSearches: [],
+      bookCollection: [],
+      getBookError: '',
     };
     component.id = 'ppjUtAEACAAJ';
     spyOn(service, 'selectBooks').and.returnValue(of(returnValue));
@@ -126,6 +130,8 @@ describe('BookDetailsComponent', () => {
       noOfBooks: 0,
       booksAlreadyPurchased: false,
       recentSearches: [],
+      bookCollection: [],
+      getBookError: '',
     };
     component.id = 'ppjUtAEACAAJ';
     component.exists = false;

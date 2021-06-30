@@ -60,6 +60,8 @@ describe('AppComponent', () => {
       noOfBooks: 1,
       booksAlreadyPurchased: false,
       recentSearches: [],
+      bookCollection: [],
+      getBookError: '',
     };
     spyOn(service, 'selectBooks').and.returnValue(of(returnValue));
     app.ngOnInit();
