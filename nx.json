@@ -11,6 +11,15 @@
   "projects": {
     "AngularAssign": {
       "tags": []
+    },
+    "node": {
+      "tags": []
+    },
+    "nodeapp": {
+      "tags": []
+    },
+    "nodejs": {
+      "tags": []
     }
   },
   "tasksRunnerOptions": {
