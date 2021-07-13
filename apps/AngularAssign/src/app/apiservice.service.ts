@@ -11,10 +11,14 @@ export class ApiserviceService {
   key = 'AIzaSyDQO3ciIFhJaxNrRJR93nl9YpjxpTG_YLM';
   constructor(private httpClient: HttpClient) {}
   get(searchString: string, key: string): Observable<Book[]> {
-    return this.httpClient
-      .get<{ items: Book[] }>(
-        `https://www.googleapis.com/books/v1/volumes?q=${searchString}&maxResults=4&keyes&key=${key}`
-      )
-      .pipe(map((books) => books.items));
+    const searchParams = {
+      params: {
+        searchString: searchString,
+      },
+    };
+    return this.httpClient.get<Book[]>(
+      `http://localhost:3000/getBooks`,
+      searchParams
+    );
   }
 }
